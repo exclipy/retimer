@@ -1,19 +1,27 @@
 import { useMachine } from "@xstate/solid";
-import { Component, Show } from "solid-js";
-import { timerListMachine } from "../timerlistMachine";
+import { Component, Show, Index, Match, Switch } from "solid-js";
+import { formatPhase, formatTime, nicelyFormatTime } from "../formatTime";
+import { Phase, timerListMachine } from "../timerlistMachine";
 import styles from "./App.module.css";
 
 const App: Component = () => {
   const [state, send] = useMachine(timerListMachine);
-  const currentPhase = () => state.context.schedule[state.context.currentPhase];
   return (
     <div class={styles.App}>
       <div class={styles.content}>
-        <div>
-          {state.context.timeRemainingMs}/{currentPhase().timeMs}
-        </div>
-        <div>{currentPhase().phase}</div>
-        <div>{state.context.currentPhase}</div>
+        <ol>
+          <Index each={state.context.schedule}>
+            {(item, i) => (
+              <PhaseRow
+                phaseSpec={item()}
+                isCurrent={
+                  state.matches("InPhase") && state.context.currentPhase === i
+                }
+              />
+            )}
+          </Index>
+        </ol>
+        <div>Remaining: {formatTime(state.context.timeRemainingMs)}</div>
         <div>{JSON.stringify(state.value)}</div>
         <Show when={state.can("start")}>
           <button
@@ -62,6 +70,24 @@ const App: Component = () => {
         </Show>
       </div>
     </div>
+  );
+};
+
+type PhaseProps = {
+  phaseSpec: { phase: Phase; timeMs: number };
+  isCurrent: boolean;
+};
+export const PhaseRow: Component<PhaseProps> = (props: PhaseProps) => {
+  const text = () =>
+    `${formatPhase(props.phaseSpec.phase)} ${nicelyFormatTime(
+      props.phaseSpec.timeMs
+    )}`;
+  return (
+    <Show when={props.isCurrent === true} fallback={<li>{text}</li>}>
+      <li>
+        <strong>{text}</strong>
+      </li>
+    </Show>
   );
 };
 

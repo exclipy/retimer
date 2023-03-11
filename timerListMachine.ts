@@ -1,7 +1,9 @@
 import { createMachine, assign, ActorRefFrom, spawn, actions } from "xstate";
 
+export type Phase = "BREATHE_UP" | "HOLD";
+
 type TimerListContextType = {
-  schedule: { phase: "BREATHE_UP" | "HOLD"; timeMs: number }[];
+  schedule: { phase: Phase; timeMs: number }[];
   currentPhase: number;
   timeRemainingMs: number;
 };
