@@ -1,0 +1,49 @@
+// This file was automatically generated. Edits will be overwritten
+
+export interface Typegen0 {
+  "@@xstate/typegen": true;
+  internalEvents: {
+    "": { type: "" };
+    "xstate.after(1000)#timerList.InPhase.Running.Waiting1Sec": {
+      type: "xstate.after(1000)#timerList.InPhase.Running.Waiting1Sec";
+    };
+    "xstate.init": { type: "xstate.init" };
+  };
+  invokeSrcNameMap: {};
+  missingImplementations: {
+    actions: never;
+    delays: never;
+    guards: never;
+    services: never;
+  };
+  eventsCausingActions: {
+    decrement1Sec: "xstate.after(1000)#timerList.InPhase.Running.Waiting1Sec";
+    incrementPhase: "";
+    resetPhase: "reset";
+    setTime: "" | "start";
+  };
+  eventsCausingDelays: {};
+  eventsCausingGuards: {
+    hasNextPhase: "";
+    isZero: "";
+  };
+  eventsCausingServices: {};
+  matchesStates:
+    | "Finished"
+    | "InPhase"
+    | "InPhase.Finished"
+    | "InPhase.Paused"
+    | "InPhase.Ready"
+    | "InPhase.Running"
+    | "InPhase.Running.Waiting1Sec"
+    | "NotStarted"
+    | {
+        InPhase?:
+          | "Finished"
+          | "Paused"
+          | "Ready"
+          | "Running"
+          | { Running?: "Waiting1Sec" };
+      };
+  tags: never;
+}
