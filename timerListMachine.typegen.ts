@@ -31,7 +31,7 @@ export interface Typegen0 {
   matchesStates:
     | "Finished"
     | "InPhase"
-    | "InPhase.Finished"
+    | "InPhase.FinishedPhase"
     | "InPhase.Paused"
     | "InPhase.Ready"
     | "InPhase.Running"
@@ -39,7 +39,7 @@ export interface Typegen0 {
     | "NotStarted"
     | {
         InPhase?:
-          | "Finished"
+          | "FinishedPhase"
           | "Paused"
           | "Ready"
           | "Running"
