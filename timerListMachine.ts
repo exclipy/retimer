@@ -18,6 +18,7 @@ export const timerListMachine = createMachine(
     /** @xstate-layout N4IgpgJg5mDOIC5QBcCWBbMAnAMq2yAdAHID2yAysgIZbKQDEBtyA2gAwC6ioADqbFRpSAOx4gAHogCMADgBshAMwBWaSoBMGpQBYAnBvW6ANCACeMnSsIb9evQHYl7JfJXyAvh9NpMufEQAkiIACgAW1LBgDABmqCL4YRzcSCD8gsJiqVIIrtLKOtIOetIaDux67A46phYIGip6hLJaSg7qtoayVl4+GNh4BITB4ZHRcQmwSdIpfAJCqKLiOXkFKiqystU6Os5btYiu1u7y8gYa7Brdem29IL4DAYQAYvGJjFhwYGxc4ukLS2yiB2zQuVxu3R0Fwc8gOuVUhHc7GkekKVy2DgcKi83hAIlIEDg4ge-gIf3mmWWiAAtEpCEVHNJ2PJ1Cpito9HC1IRqvYDKcnHJpNI7iTBkQyJQaHRIOSMossqAcjpZHDpDtRf1SUFQhEonKAYrJIdmco1JptPpDColGqlE1bHynC43J5cWKnq9JmFZal-pSgQgVXCVRpQdolC1bJddDiPEA */
     id: "timerList",
     predictableActionArguments: true,
+    preserveActionOrder: true,
     tsTypes: {} as import("./timerlistMachine.typegen").Typegen0,
     schema: {
       context: {} as TimerListContextType,
@@ -44,7 +45,7 @@ export const timerListMachine = createMachine(
         },
 
         entry: "spawnTimer",
-        exit: "stopTimer",
+        exit: ["stopTimer", "clearTimer"],
       },
       Finished: {
         on: { reset: { target: "NotStarted", actions: "resetPhase" } },
@@ -61,6 +62,7 @@ export const timerListMachine = createMachine(
         currentTimer: spawn(timerMachine),
       }),
       stopTimer: stop((context) => context.currentTimer as TimerMachine),
+      clearTimer: assign({ currentTimer: undefined }),
     },
     guards: {
       hasNextPhase: (context) => {

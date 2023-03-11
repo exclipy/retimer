@@ -1,7 +1,6 @@
 .App {
   text-align: center;
   font-size: calc(10px + 2vmin);
-  place-items: center;
   display: flex;
   height: 100vh;
 }
