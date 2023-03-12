@@ -1,15 +1,38 @@
 import { useMachine } from "@xstate/solid";
 import { Component, Show, Index } from "solid-js";
 import { formatPhase, formatTime, nicelyFormatTime } from "./formatTime";
-import { Phase, timerListMachine } from "../timerlistMachine";
+import {
+  Phase,
+  ScheduleEntry,
+  TimerListContextType,
+  timerListMachine,
+} from "../timerlistMachine";
 import styles from "./App.module.css";
 import { AudioElements, playAudio } from "./AudioElements";
+import { buildAudioPlan } from "./buildAudioPlan";
+
+const schedule = [
+  { phase: "BREATHE_UP", timeMs: 45000 },
+  { phase: "HOLD", timeMs: 120000 },
+  { phase: "HOLD", timeMs: 120000 },
+  { phase: "HOLD", timeMs: 180000 },
+  { phase: "HOLD", timeMs: 180000 },
+  { phase: "HOLD", timeMs: 240000 },
+] as const;
+const audioPlan = buildAudioPlan(schedule);
 
 const App: Component = () => {
   const [state, send] = useMachine(timerListMachine, {
+    context: {
+      schedule,
+    },
     actions: {
-      playStartAudio: () => {
-        playAudio("THATS_IT_WELL_DONE");
+      maybePlayAudio: (context: TimerListContextType) => {
+        const phaseIndex = context.currentPhase;
+        const timeMs = schedule[phaseIndex].timeMs - context.timeRemainingMs;
+
+        const key = audioPlan.lookup(phaseIndex, timeMs);
+        if (key) playAudio(key);
       },
     },
   });
@@ -30,7 +53,6 @@ const App: Component = () => {
           </Index>
         </ol>
         <div>Remaining: {formatTime(state.context.timeRemainingMs)}</div>
-        <div>{JSON.stringify(state.value)}</div>
         <Show when={state.can("start")}>
           <button
             onClick={() => {
@@ -81,10 +103,7 @@ const App: Component = () => {
   );
 };
 
-type PhaseProps = {
-  phaseSpec: { phase: Phase; timeMs: number };
-  isCurrent: boolean;
-};
+type PhaseProps = { phaseSpec: ScheduleEntry; isCurrent: boolean };
 const PhaseRow: Component<PhaseProps> = (props: PhaseProps) => {
   const text = () =>
     `${formatPhase(props.phaseSpec.phase)} ${nicelyFormatTime(

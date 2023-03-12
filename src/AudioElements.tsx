@@ -1,4 +1,5 @@
 import { Component } from "solid-js";
+import { Phase, Schedule, ScheduleEntry } from "../timerListMachine";
 
 const audioFiles = {
   T10S_LEFT: "10s-left.ogg",
@@ -13,6 +14,7 @@ const audioFiles = {
   T4M: "4m.ogg",
   ALREADY_60S: "already-60s.ogg",
   BREATHE: "breathe.ogg",
+  HOLD: "hold.ogg",
   HOLD_YOUR_BREATH_STARTING_NOW: "hold-your-breath-starting-now.ogg",
   THATS_IT_WELL_DONE: "thats-it-well-done.ogg",
 };

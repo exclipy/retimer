@@ -1,9 +1,11 @@
 import { createMachine, assign, ActorRefFrom, spawn, actions } from "xstate";
 
 export type Phase = "BREATHE_UP" | "HOLD";
+export type ScheduleEntry = { readonly phase: Phase; readonly timeMs: number };
+export type Schedule = readonly ScheduleEntry[];
 
-type TimerListContextType = {
-  schedule: { phase: Phase; timeMs: number }[];
+export type TimerListContextType = {
+  schedule: Schedule;
   currentPhase: number;
   timeRemainingMs: number;
 };
@@ -27,11 +29,7 @@ export const timerListMachine = createMachine(
       events: {} as TimerListEventType,
     },
     context: {
-      schedule: [
-        { phase: "BREATHE_UP", timeMs: 5000 },
-        { phase: "HOLD", timeMs: 6000 },
-        { phase: "HOLD", timeMs: 7000 },
-      ],
+      schedule: [],
       currentPhase: 0,
       timeRemainingMs: 3000,
     },
@@ -41,7 +39,6 @@ export const timerListMachine = createMachine(
         on: {
           start: {
             target: "InPhase.Ready",
-            actions: "playStartAudio",
           },
         },
       },
@@ -72,6 +69,7 @@ export const timerListMachine = createMachine(
             on: {
               pause: "#timerList.InPhase.Paused",
             },
+            entry: "maybePlayAudio",
           },
           FinishedPhase: {
             always: [
