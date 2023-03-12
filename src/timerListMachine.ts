@@ -31,7 +31,7 @@ export const timerListMachine = createMachine(
     context: {
       schedule: [],
       currentPhase: 0,
-      timeRemainingMs: 3000,
+      timeRemainingMs: 0,
     },
     initial: "NotStarted",
     states: {
@@ -63,13 +63,13 @@ export const timerListMachine = createMachine(
                   target: "#timerList.InPhase.FinishedPhase",
                   cond: "isZero",
                 },
+                entry: "maybePlayAudio",
               },
             },
             initial: "Waiting1Sec",
             on: {
               pause: "#timerList.InPhase.Paused",
             },
-            entry: "maybePlayAudio",
           },
           FinishedPhase: {
             always: [

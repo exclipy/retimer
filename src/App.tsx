@@ -6,7 +6,7 @@ import {
   ScheduleEntry,
   TimerListContextType,
   timerListMachine,
-} from "../timerlistMachine";
+} from "./timerlistMachine";
 import styles from "./App.module.css";
 import { AudioElements, playAudio } from "./AudioElements";
 import { buildAudioPlan } from "./buildAudioPlan";
@@ -35,6 +35,9 @@ const App: Component = () => {
         if (key) playAudio(key);
       },
     },
+    delays: {},
+    guards: {},
+    services: {},
   });
   return (
     <div class={styles.App}>

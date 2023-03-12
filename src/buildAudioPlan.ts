@@ -1,4 +1,4 @@
-import { Phase, Schedule, ScheduleEntry } from "../timerListMachine";
+import { Phase, Schedule, ScheduleEntry } from "./timerListMachine";
 import { AudioKey } from "./AudioElements";
 
 class Plan {
@@ -64,11 +64,11 @@ function getNextEntryType(entry: ScheduleEntry): "END" | Phase {
   return entry.phase;
 }
 
-// const audioPlan = buildAudioPlan([
-//   { phase: "BREATHE_UP", timeMs: 120000 },
-//   { phase: "HOLD", timeMs: 120000 },
-//   { phase: "HOLD", timeMs: 180000 },
-//   { phase: "HOLD", timeMs: 180000 },
-//   { phase: "HOLD", timeMs: 300000 },
-// ]);
-// audioPlan;
+const audioPlan = buildAudioPlan([
+  { phase: "BREATHE_UP", timeMs: 45000 },
+  { phase: "HOLD", timeMs: 120000 },
+  { phase: "HOLD", timeMs: 180000 },
+  { phase: "HOLD", timeMs: 180000 },
+  { phase: "HOLD", timeMs: 300000 },
+]);
+audioPlan;

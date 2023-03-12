@@ -1,22 +1,35 @@
 import { Component } from "solid-js";
-import { Phase, Schedule, ScheduleEntry } from "../timerListMachine";
+
+import t10s_left from "../voice/10s-left.ogg";
+import t1m30s from "../voice/1m30s.ogg";
+import t2m from "../voice/2m.ogg";
+import t2m30s from "../voice/2m30s.ogg";
+import t30s_remaining from "../voice/30s-remaining.ogg";
+import t3m from "../voice/3m.ogg";
+import t3m15s from "../voice/3m15s.ogg";
+import t3m30s from "../voice/3m30s.ogg";
+import t3m45s from "../voice/3m45s.ogg";
+import t4m from "../voice/4m.ogg";
+import already60s from "../voice/already-60s.ogg";
+import breathe from "../voice/breathe.ogg";
+import hold from "../voice/hold.ogg";
+import wellDone from "../voice/thats-it-well-done.ogg";
 
 const audioFiles = {
-  T10S_LEFT: "10s-left.ogg",
-  T1M30S: "1m30s.ogg",
-  T2M: "2m.ogg",
-  T2M30S: "2m30s.ogg",
-  T30S_REMAINING: "30s-remaining.ogg",
-  T3M: "3m.ogg",
-  T3M15S: "3m15s.ogg",
-  T3M30S: "3m30s.ogg",
-  T3M45S: "3m45s.ogg",
-  T4M: "4m.ogg",
-  ALREADY_60S: "already-60s.ogg",
-  BREATHE: "breathe.ogg",
-  HOLD: "hold.ogg",
-  HOLD_YOUR_BREATH_STARTING_NOW: "hold-your-breath-starting-now.ogg",
-  THATS_IT_WELL_DONE: "thats-it-well-done.ogg",
+  T10S_LEFT: t10s_left,
+  T1M30S: t1m30s,
+  T2M: t2m,
+  T2M30S: t2m30s,
+  T30S_REMAINING: t30s_remaining,
+  T3M: t3m,
+  T3M15S: t3m15s,
+  T3M30S: t3m30s,
+  T3M45S: t3m45s,
+  T4M: t4m,
+  ALREADY_60S: already60s,
+  BREATHE: breathe,
+  HOLD: hold,
+  THATS_IT_WELL_DONE: wellDone,
 };
 export type AudioKey = keyof typeof audioFiles;
 
@@ -26,9 +39,7 @@ export const AudioElements: Component = () => {
   for (const key of Object.keys(audioFiles) as AudioKey[]) {
     audioMap.set(
       key,
-      (
-        <audio src={`./voice/${audioFiles[key]}`} preload="auto" />
-      ) as HTMLAudioElement
+      (<audio src={audioFiles[key]} preload="auto" />) as HTMLAudioElement
     );
   }
 
