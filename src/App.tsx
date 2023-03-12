@@ -1,14 +1,22 @@
 import { useMachine } from "@xstate/solid";
-import { Component, Show, Index, Match, Switch } from "solid-js";
-import { formatPhase, formatTime, nicelyFormatTime } from "../formatTime";
+import { Component, Show, Index } from "solid-js";
+import { formatPhase, formatTime, nicelyFormatTime } from "./formatTime";
 import { Phase, timerListMachine } from "../timerlistMachine";
 import styles from "./App.module.css";
+import { AudioElements, playAudio } from "./AudioElements";
 
 const App: Component = () => {
-  const [state, send] = useMachine(timerListMachine);
+  const [state, send] = useMachine(timerListMachine, {
+    actions: {
+      playStartAudio: () => {
+        playAudio("THATS_IT_WELL_DONE");
+      },
+    },
+  });
   return (
     <div class={styles.App}>
       <div class={styles.content}>
+        <AudioElements />
         <ol>
           <Index each={state.context.schedule}>
             {(item, i) => (
@@ -77,7 +85,7 @@ type PhaseProps = {
   phaseSpec: { phase: Phase; timeMs: number };
   isCurrent: boolean;
 };
-export const PhaseRow: Component<PhaseProps> = (props: PhaseProps) => {
+const PhaseRow: Component<PhaseProps> = (props: PhaseProps) => {
   const text = () =>
     `${formatPhase(props.phaseSpec.phase)} ${nicelyFormatTime(
       props.phaseSpec.timeMs

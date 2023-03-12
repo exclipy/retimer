@@ -17,7 +17,7 @@ type TimerListEventType =
 
 export const timerListMachine = createMachine(
   {
-    /** @xstate-layout N4IgpgJg5mDOIC5QBcCWBbMAnAMq2yAdAHID2yAysgIZbKQDEBtyA2gAwC6ioADqbFRpSAOx4gAHogBMANnaFZADgCsK9tIDM7NQHZNKgDQgAnogAs0gJyElGgIzT752fatX2qgL5fjaTLj4RACSIgAKABbUsGCEAEpg1BAmDBzcSCD8gsJiGVIIula6hOz2+uzmjpYassZmCOo20kqa9rLuKvaaHvo+fhjYeASEoZHRsXEAriIiqCJQDLzUkzFp4llCqKLi+fYamopWzuwVsuatVnWISs6E3VrySjfS5kV9IP6DQSPhUTHx01m80IAHVqJt5vYKGAAMapLjrASbbZ5RCFBRuazNDztbRKK4IWSaJSKbFuFRWTTmJSud6fQLDUZ-CaAuZQUHgtCQ6FwiTMeiEagAM3oWAAFHsTgBKBj0oYhX7jAEzNkciFQKGwtYZDY5HaIPbNQjmFS6dhnVoGay1UyIIk2NquXS6V7sKyWex0gYMhVjf4AMTm+AikD9YHh6T4SL1qIQ5jdxvNZrNylKsjkBNcskIuj0Sl0WnM+jKXoC8p+YcIYWWMQgDCwcEmmG1UeyW1yoHyFsIKnOunsT3Y+jUNvquiJxqOVnkKi0dndpa+jMV-2rK0YMOoIhhYAANi3MtH2-q40Wey7lCpZC7nNSCXYDpozmVpOxWm4lOZFz7CIHZrAQzrBsYjYBEdSPFFOwNaRpEUClJXcZoVGJewCVnWDZ2vJQ5H7SlNF0b9yyZJU-2DUNmVSexI0PNtIMkGR00OKwnBUJ5KXdHRM3McxCGY902nsMobhLd4RFICA4HEOUgkRWiO3ogoeNkeCTkQ1QUIJbRiisZ4+JeTRtE0QjvjISgaDoSBZOReTdmkFRbGJXQ2LKAzpFzAlLBsOwnCcFw3A8JRjOXMMrJjKCECfexE2vIdzTsNoM1tCKrHs6lHEpZ1Ms6ILfWZeJEmSULj1jeRYMcU03PsXsp2kDzVDuGlTQM9Qh2aAjfA+b0iJXFkVXmIq6PyAKcxdJzVHUdpuLq2CdK6N8izs1oixyis8qmPr2TBdVNRhAabMQFLs2dIsnjUc13XMNCzWNG5Whgpw9hUFbiIDIMAPI8Y9pPIkyr2QSXE6RwtEzfCbsLHRlHdXNnp6qsa0s8C5O+gxeOQ-MqVYzoWnvW57ifTxnledr+jLb5SPeiAvtjLp7Ls5puM8dQ1FqpL0xsalVAHFxmOUr8fC8IA */
+    /** @xstate-layout N4IgpgJg5mDOIC5QBcCWBbMAnAMq2yAdAHID2yAysgIZbKQDEBtyA2gAwC6ioADqbFRpSAOx4gAHogDMAJmmEAbAE4A7AA5105YoCsARnWrZAGhABPRABZF6wrM27F0-cv37F7fQF9vZtJi4+EQAkiIACgAW1LBghABKYNQQ5gwc3Egg-ILCYplSCKpqhF6q0uxW+rJWsuyyimaWCLrsyvZaHsrKBtrsZb7+GNh4BIRhUTFx8QCuIiKoIlAMvNTTseni2UKoouIF+nUKKvpW7BWKVi7KjYjqJ4Ta8p6aVVZqAyABw8FjEdGxCVm80WhAA6tRtot9BQwABjNJcTYCba7fKIIrsQiuWTKBzKdgqcrqG4IZx2RR41y6ZTSKzqRQ+PyfIZBUbjf5TIELKBgiFoKEw+ESZj0QjUABm9CwAAoDmcAJQML6s0J-SaAubc3mQqDQuEbTJbXJ7RAHByEKy6VQEy76aS6HENCyIZxtDwM1SqN6tGqMwaBEaqiYAgBiC3wkUgwbACIyfGRxrRCFObVOimt1tsXgpTqaDMUhFUuitRnkVjK+lUH2Vgd+0cIYfmsEjEGjaX0cayCZ2eVABXqsiUXVk+l0mhpylOuhJFyshFxk487g0y+rLNr7PV4VWsQgDFh1BEsLAABsDfGcj2Tcny4QrTZ1E4vSc6ST1OwFNILpXai5XOorDXAMfk3AFtzWRgsDgaZMHPLtL1RPsXUuO9LlUQx3zKYtc3RZwLTcHR2AdaR30nIDvlGRsI0guAwDYRFDW7RDJFNWRBz0NwzmHR8SP0EkHUHB103Uep0JpaQqw+ERSAgOBxBrYIkQQ3sWMKOcOLlbjdF4klylUec7nKHRPE9PpFHIlUSHIKgWEgJSURU-ZZF0QgtCMcdK2kOQixJGo2nfEcRxsVx8XUCyNzVWJ7MTJCEC-fQLQJDMCXfDx6l07oLUMg4DF9YtwpAyKpiSFJoqvJNPEHKorVkdDdDebFfMfB56StLyWj6BxJP9Cigw5DVgSgMrmIKULCy9DRHxaFQrCsJrB2UQzalqdQ1FcAq2SKgatXBHU9VhYbHMQboC09ctHGmyc5udZprSyu0qjY9wiI2vr1So5sow5Q7r2cKqDncGwDEe6QZwkrKyyI2xJyLV66368Ddx+ir7XnbSjFpMcDC0N97keL92Beap3iZBTKPDT6IGR2K7Rc5yHFmwmWmLUwbopVNHEMGxcT0QDfG8IA */
     id: "timerList",
     predictableActionArguments: true,
     preserveActionOrder: true,
@@ -37,7 +37,14 @@ export const timerListMachine = createMachine(
     },
     initial: "NotStarted",
     states: {
-      NotStarted: { on: { start: "InPhase.Ready" } },
+      NotStarted: {
+        on: {
+          start: {
+            target: "InPhase.Ready",
+            actions: "playStartAudio",
+          },
+        },
+      },
       InPhase: {
         states: {
           Ready: {

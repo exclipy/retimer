@@ -11,7 +11,7 @@ export interface Typegen0 {
   };
   invokeSrcNameMap: {};
   missingImplementations: {
-    actions: never;
+    actions: "playStartAudio";
     delays: never;
     guards: never;
     services: never;
@@ -19,6 +19,7 @@ export interface Typegen0 {
   eventsCausingActions: {
     decrement1Sec: "xstate.after(1000)#timerList.InPhase.Running.Waiting1Sec";
     incrementPhase: "";
+    playStartAudio: "start";
     resetPhase: "reset";
     setTime: "" | "start";
   };
