@@ -12,12 +12,10 @@ import { AudioElements, playAudio } from "./AudioElements";
 import { buildAudioPlan } from "./buildAudioPlan";
 
 const schedule = [
-  { phase: "BREATHE_UP", timeMs: 45000 },
+  { phase: "BREATHE_UP", timeMs: 105000 },
+  { phase: "HOLD", timeMs: 105000 },
   { phase: "HOLD", timeMs: 120000 },
-  { phase: "HOLD", timeMs: 120000 },
-  { phase: "HOLD", timeMs: 180000 },
-  { phase: "HOLD", timeMs: 180000 },
-  { phase: "HOLD", timeMs: 240000 },
+  { phase: "HOLD", timeMs: 150000 },
 ] as const;
 const audioPlan = buildAudioPlan(schedule);
 

@@ -4,8 +4,8 @@ export interface Typegen0 {
   "@@xstate/typegen": true;
   internalEvents: {
     "": { type: "" };
-    "xstate.after(1000)#timerList.InPhase.Running.Waiting1Sec": {
-      type: "xstate.after(1000)#timerList.InPhase.Running.Waiting1Sec";
+    "xstate.after(ADJUSTED_ONE_SECOND)#timerList.InPhase.Running.Waiting1Sec": {
+      type: "xstate.after(ADJUSTED_ONE_SECOND)#timerList.InPhase.Running.Waiting1Sec";
     };
     "xstate.init": { type: "xstate.init" };
   };
@@ -17,16 +17,24 @@ export interface Typegen0 {
     services: never;
   };
   eventsCausingActions: {
-    decrement1Sec: "xstate.after(1000)#timerList.InPhase.Running.Waiting1Sec";
+    decrement1Sec: "xstate.after(ADJUSTED_ONE_SECOND)#timerList.InPhase.Running.Waiting1Sec";
     incrementPhase: "";
     maybePlayAudio:
       | ""
       | "resume"
-      | "xstate.after(1000)#timerList.InPhase.Running.Waiting1Sec";
+      | "start"
+      | "xstate.after(ADJUSTED_ONE_SECOND)#timerList.InPhase.Running.Waiting1Sec";
+    recordWallTime: "" | "resume" | "start";
     resetPhase: "reset";
-    setTime: "" | "start";
+    setTime: "" | "reset" | "start";
   };
-  eventsCausingDelays: {};
+  eventsCausingDelays: {
+    ADJUSTED_ONE_SECOND:
+      | ""
+      | "resume"
+      | "start"
+      | "xstate.after(ADJUSTED_ONE_SECOND)#timerList.InPhase.Running.Waiting1Sec";
+  };
   eventsCausingGuards: {
     hasNextPhase: "";
     isZero: "";
@@ -37,7 +45,6 @@ export interface Typegen0 {
     | "InPhase"
     | "InPhase.FinishedPhase"
     | "InPhase.Paused"
-    | "InPhase.Ready"
     | "InPhase.Running"
     | "InPhase.Running.Waiting1Sec"
     | "NotStarted"
@@ -45,7 +52,6 @@ export interface Typegen0 {
         InPhase?:
           | "FinishedPhase"
           | "Paused"
-          | "Ready"
           | "Running"
           | { Running?: "Waiting1Sec" };
       };

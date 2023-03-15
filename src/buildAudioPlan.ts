@@ -64,11 +64,19 @@ function getNextEntryType(entry: ScheduleEntry): "END" | Phase {
   return entry.phase;
 }
 
+// const audioPlan = buildAudioPlan([
+//   { phase: "BREATHE_UP", timeMs: 45000 },
+//   { phase: "HOLD", timeMs: 120000 },
+//   { phase: "HOLD", timeMs: 180000 },
+//   { phase: "HOLD", timeMs: 180000 },
+//   { phase: "HOLD", timeMs: 300000 },
+// ]);
+// audioPlan;
+
 const audioPlan = buildAudioPlan([
-  { phase: "BREATHE_UP", timeMs: 45000 },
+  { phase: "BREATHE_UP", timeMs: 105000 },
+  { phase: "HOLD", timeMs: 105000 },
   { phase: "HOLD", timeMs: 120000 },
-  { phase: "HOLD", timeMs: 180000 },
-  { phase: "HOLD", timeMs: 180000 },
-  { phase: "HOLD", timeMs: 300000 },
+  { phase: "HOLD", timeMs: 150000 },
 ]);
 audioPlan;

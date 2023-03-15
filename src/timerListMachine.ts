@@ -8,6 +8,7 @@ export type TimerListContextType = {
   schedule: Schedule;
   currentPhase: number;
   timeRemainingMs: number;
+  initialWallTimeMs: number;
 };
 
 type TimerListEventType =
@@ -19,7 +20,7 @@ type TimerListEventType =
 
 export const timerListMachine = createMachine(
   {
-    /** @xstate-layout N4IgpgJg5mDOIC5QBcCWBbMAnAMq2yAdAHID2yAysgIZbKQDEBtyA2gAwC6ioADqbFRpSAOx4gAHogDMAJmmEAbAE4A7AA5105YoCsARnWrZAGhABPRABZF6wrM27F0-cv37F7fQF9vZtJi4+EQAkiIACgAW1LBghABKYNQQ5gwc3Egg-ILCYplSCKpqhF6q0uxW+rJWsuyyimaWCLrsyvZaHsrKBtrsZb7+GNh4BIRhUTFx8QCuIiKoIlAMvNTTseni2UKoouIF+nUKKvpW7BWKVi7KjYjqJ4Ta8p6aVVZqAyABw8FjEdGxCVm80WhAA6tRtot9BQwABjNJcTYCba7fKIIrsQiuWTKBzKdgqcrqG4IZx2RR41y6ZTSKzqRQ+PyfIZBUbjf5TIELKBgiFoKEw+ESZj0QjUABm9CwAAoDmcAJQML6s0J-SaAubc3mQqDQuEbTJbXJ7RAHByEKy6VQEy76aS6HENCyIZxtDwM1SqN6tGqMwaBEaqiYAgBiC3wkUgwbACIyfGRxrRCFObVOimt1tsXgpTqaDMUhFUuitRnkVjK+lUH2Vgd+0cIYfmsEjEGjaX0cayCZ2eVABXqsiUXVk+l0mhpylOuhJFyshFxk487g0y+rLNr7PV4VWsQgDFh1BEsLAABsDfGcj2Tcny4QrTZ1E4vSc6ST1OwFNILpXai5XOorDXAMfk3AFtzWRgsDgaZMHPLtL1RPsXUuO9LlUQx3zKYtc3RZwLTcHR2AdaR30nIDvlGRsI0guAwDYRFDW7RDJFNWRBz0NwzmHR8SP0EkHUHB103Uep0JpaQqw+ERSAgOBxBrYIkQQ3sWMKOcOLlbjdF4klylUec7nKHRPE9PpFHIlUSHIKgWEgJSURU-ZZF0QgtCMcdK2kOQixJGo2nfEcRxsVx8XUCyNzVWJ7MTJCEC-fQLQJDMCXfDx6l07oLUMg4DF9YtwpAyKpiSFJoqvJNPEHKorVkdDdDebFfMfB56StLyWj6BxJP9Cigw5DVgSgMrmIKULCy9DRHxaFQrCsJrB2UQzalqdQ1FcAq2SKgatXBHU9VhYbHMQboC09ctHGmyc5udZprSyu0qjY9wiI2vr1So5sow5Q7r2cKqDncGwDEe6QZwkrKyyI2xJyLV66368Ddx+ir7XnbSjFpMcDC0N97keL92Beap3iZBTKPDT6IGR2K7Rc5yHFmwmWmLUwbopVNHEMGxcT0QDfG8IA */
+    /** @xstate-layout N4IgpgJg5mDOIC5QBcCWBbMAnAMq2yAdAHID2yAysgIZbKQDEBtyA2gAwC6ioADqbFRpSAOx4gAHogC0ARgBs8wgHZl7AKwBOdfIAcAZkXaANCACeiWVYAshdvP3rl1-ZoPWPAX0+m0mXPhEAJIiAAoAFtSwYIQASgCuIiKoIlAMvNTx0RzcSCD8gsJieVIIhpqE1pr61gBM8mry1qrsyqYWCFY6hDrKNfLsreq6stbevhjYeASEIRFRMQlJKVCEAOrUQiuyFGAAxgw54gVbouKl+uyyhI7q7LUusprWWtby7Zb6ytfqw7pVb0032U4xAfimgVmYUi0TiiWSqXWmzQqR2+wYEmY9EI1AAZvQsAAKACCABEAFIAVQoABUAKKkgD6AHliHTGRQ6QBhVmkgCUDHBARmcxhi3hKyRW1Ruz2RzyJyK50QzUI2g0+lq+kcAx073Mllqv0IunUdTqrU0smUTVBQumwWhC0IADEUvhwpB5tFDlxjgJTsVQKVrKMTc8POovoYDOoPp06hVNLVdJp7CnarIDPI7ZNhY7vTE3clYJ6IIXDrJcnwA0qSirLip5FZVEDlLUrW0DZ0zbVKuxNPInLIo6ajbn-A6oYXCKFMtEIAw9tQRHswAAbeU1wqoM71hDyWrKNX3XTfPT6UbW+OyTX6NUGaqKPqKOoTiEip2wudZRhYODxJgW75LWu5BpIiB3NcDjKMmNqGA0Vg3rIHaEPUtTsLoqaDroDT6O++auu6pZ-nAYBsH6CqgXuwaIPUx4KNYsaDoo9xmjeTjHs8lxHqGoa-N4PggCIpAQHA4j2oE-o7jREEININTXI0WiyIMTHJlq8bPEojh1KMyhnl8BkEVOZCUDQdCQNJgbKvJHb3spVpqamtSad2KGXnYKYvIORpuJhJmQqKCzWXWtHyUxdgAg0r6uC41g3uw2omr2RqwQoWr4UJkmfjOSwIlAoVgbZ0jsFF2k2k0cU1JmCXuSh1y6a5TR9ECtSBblYpwssiIbNKUBonsRWyaUTg9Bm+imv8LkaDeOqEIomYYcM9TyG4HUFl1xYel6YrDeBIaGGhmo+WmIyqfoc1rWhLiwXeTg4Rt05dT+C77bZh5KGmGHJmt2gDLUyF1Dc6goUlDShg0ILZXmU7bSREDvfuPmEAomhWk0TzaCO+odAoVw9AYIyuVmVqyIJnhAA */
     id: "timerList",
     predictableActionArguments: true,
     preserveActionOrder: true,
@@ -32,55 +33,57 @@ export const timerListMachine = createMachine(
       schedule: [],
       currentPhase: 0,
       timeRemainingMs: 0,
+      initialWallTimeMs: 0,
     },
     initial: "NotStarted",
     states: {
       NotStarted: {
         on: {
           start: {
-            target: "InPhase.Ready",
+            target: "InPhase.Running",
+            actions: "setTime",
           },
         },
       },
       InPhase: {
         states: {
-          Ready: {
-            entry: "setTime",
-            always: {
-              target: "#timerList.InPhase.Running",
-            },
-          },
           Running: {
             states: {
               Waiting1Sec: {
-                after: {
-                  "1000": {
-                    target: "#timerList.InPhase.Running.Waiting1Sec",
-                    actions: "decrement1Sec",
-                  },
-                },
                 always: {
                   target: "#timerList.InPhase.FinishedPhase",
                   cond: "isZero",
                 },
                 entry: "maybePlayAudio",
+                after: {
+                  ADJUSTED_ONE_SECOND: {
+                    target: "#timerList.InPhase.Running.Waiting1Sec",
+                    actions: "decrement1Sec",
+                  },
+                },
               },
             },
+
             initial: "Waiting1Sec",
+
             on: {
               pause: "#timerList.InPhase.Paused",
             },
+
+            entry: ["recordWallTime"],
           },
+
           FinishedPhase: {
             always: [
               {
-                target: "Ready",
+                target: "Running",
                 cond: "hasNextPhase",
-                actions: "incrementPhase",
+                actions: ["incrementPhase", "setTime"],
               },
               "#timerList.Finished",
             ],
           },
+
           Paused: {
             on: {
               cancel: "#timerList.Finished",
@@ -89,10 +92,12 @@ export const timerListMachine = createMachine(
           },
         },
 
-        initial: "Ready",
+        initial: "Running",
       },
       Finished: {
-        on: { reset: { target: "NotStarted", actions: "resetPhase" } },
+        on: {
+          reset: { target: "NotStarted", actions: ["resetPhase", "setTime"] },
+        },
       },
     },
   },
@@ -109,11 +114,35 @@ export const timerListMachine = createMachine(
       decrement1Sec: assign({
         timeRemainingMs: (context) => context.timeRemainingMs - 1000,
       }),
+      recordWallTime: assign({
+        initialWallTimeMs: (context) =>
+          new Date().getTime() - supposedlyElapsedMs(context),
+      }),
     },
     guards: {
       hasNextPhase: (context) =>
         context.schedule.length > context.currentPhase + 1,
       isZero: (context) => context.timeRemainingMs <= 0,
     },
+    delays: {
+      ADJUSTED_ONE_SECOND: (context) => {
+        const actuallyElapsedMs =
+          new Date().getTime() - context.initialWallTimeMs;
+        const lateByMs = actuallyElapsedMs - supposedlyElapsedMs(context);
+        console.log(
+          "late by",
+          lateByMs,
+          actuallyElapsedMs,
+          supposedlyElapsedMs
+        );
+        return 1000 - lateByMs;
+      },
+    },
   }
 );
+
+function supposedlyElapsedMs(context: TimerListContextType): number {
+  return (
+    context.schedule[context.currentPhase].timeMs - context.timeRemainingMs
+  );
+}
