@@ -27,7 +27,7 @@ export function formatPhase(phase: Phase) {
     case "BREATHE_UP":
       return "Breathe up";
     case "HOLD":
-      return "Hold your breath";
+      return "Hold";
     default:
       const x: never = phase;
   }

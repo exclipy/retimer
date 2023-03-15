@@ -11,12 +11,14 @@ import t3m30s from "../voice/3m30s.ogg";
 import t3m45s from "../voice/3m45s.ogg";
 import t4m from "../voice/4m.ogg";
 import already60s from "../voice/already-60s.ogg";
+import t60s from "../voice/60s.ogg";
 import breathe from "../voice/breathe.ogg";
 import hold from "../voice/hold.ogg";
 import wellDone from "../voice/thats-it-well-done.ogg";
 
 const audioFiles = {
   T10S_LEFT: t10s_left,
+  T60S: t60s,
   T1M30S: t1m30s,
   T2M: t2m,
   T2M30S: t2m30s,

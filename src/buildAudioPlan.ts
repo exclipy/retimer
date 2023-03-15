@@ -35,7 +35,7 @@ export function buildAudioPlan(schedule: Schedule): Plan {
       plan.add(i, 0, "BREATHE");
     } else if (entry.phase === "HOLD") {
       plan.add(i, 0, "HOLD");
-      addToPlan(60000, "ALREADY_60S");
+      addToPlan(60000, "T60S");
       addToPlan(90000, "T1M30S");
       addToPlan(120000, "T2M");
       addToPlan(150000, "T2M30S");
