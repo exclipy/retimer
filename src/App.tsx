@@ -1,5 +1,5 @@
 import { useMachine } from "@xstate/solid";
-import { Component, Show, Index } from "solid-js";
+import { Component, Show, Index, ParentComponent } from "solid-js";
 import { formatPhase, formatTime, nicelyFormatTime } from "./formatTime";
 import {
   Phase,
@@ -39,21 +39,8 @@ const App: Component = () => {
   });
   return (
     <div class={styles.App}>
-      <div class={styles.content}>
-        <AudioElements />
-        <ol>
-          <Index each={state.context.schedule}>
-            {(item, i) => (
-              <PhaseRow
-                phaseSpec={item()}
-                isCurrent={
-                  state.matches("InPhase") && state.context.currentPhase === i
-                }
-              />
-            )}
-          </Index>
-        </ol>
-        <div>Remaining: {formatTime(state.context.timeRemainingMs)}</div>
+      <AudioElements />
+      <div class={styles.controls}>
         <Show when={state.can("start")}>
           <button
             onClick={() => {
@@ -100,6 +87,25 @@ const App: Component = () => {
           </button>
         </Show>
       </div>
+      <div class={styles.side}>
+        <ol>
+          <Index each={state.context.schedule}>
+            {(item, i) => (
+              <PhaseRow
+                phaseSpec={item()}
+                isCurrent={
+                  state.matches("InPhase") && state.context.currentPhase === i
+                }
+              />
+            )}
+          </Index>
+        </ol>
+      </div>
+      <div class={styles.content}>
+        <RemainingTime>
+          {formatTime(state.context.timeRemainingMs)}
+        </RemainingTime>
+      </div>
     </div>
   );
 };
@@ -110,12 +116,15 @@ const PhaseRow: Component<PhaseProps> = (props: PhaseProps) => {
     `${formatPhase(props.phaseSpec.phase)} ${nicelyFormatTime(
       props.phaseSpec.timeMs
     )}`;
+  return <li classList={{ [styles.isCurrent]: props.isCurrent }}>{text}</li>;
+};
+
+const RemainingTime: ParentComponent = (props) => {
   return (
-    <Show when={props.isCurrent === true} fallback={<li>{text}</li>}>
-      <li>
-        <strong>{text}</strong>
-      </li>
-    </Show>
+    <div>
+      <label class={styles.timeLabel}>Remaining:</label>
+      <div class={styles.bigTime}>{props.children}</div>
+    </div>
   );
 };
 
